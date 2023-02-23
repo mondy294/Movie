@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="big-box">
     <Topic></Topic>
     <div class="headImg">
       <div class="user">
@@ -32,6 +32,12 @@
     </div>
     <div>
       <router-view> </router-view>
+    </div>
+    <div class="footer-nav">
+      <h1>你可以通过屏幕右侧二维码联系我们</h1>
+    </div>
+    <div class="connect">
+      <img src="./images/erwei.jpg" alt="" />
     </div>
   </div>
 </template>
@@ -96,6 +102,32 @@ export default {
 * {
   margin: 0;
   padding: 0;
+}
+.footer-nav {
+  position: relative;
+  top: 200px;
+  width: 100%;
+  height: 200px;
+  background-color: #c4e1f9;
+  /* background-color: #fff; */
+}
+.footer-nav > h1 {
+  position: absolute;
+  top: 50px;
+  left: 50px;
+  color: #fff;
+}
+.connect > img {
+  position: fixed;
+  right: 10px;
+  top: 360px;
+  width: 300px;
+}
+.big-box {
+  /* background-color: red; */
+  width: 100%;
+  background: url("https://s1.hdslb.com/bfs/static/stone-free/dyn-home/assets/background.png");
+  background-attachment: fixed;
 }
 .headImg {
   position: absolute;
@@ -181,12 +213,12 @@ export default {
 .nav {
   position: relative;
   box-sizing: border-box;
-  top: 267px;
+  top: 280px;
   left: 50%;
   transform: translateX(-50%);
   width: 1283px;
   height: 66px;
-  border: 0.5px solid rgba(0, 0, 0, 0.2);
+  background-color: #fff;
   border-radius: 5px;
 }
 .nav > a {

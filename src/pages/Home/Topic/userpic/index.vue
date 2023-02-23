@@ -92,7 +92,7 @@ export default {
   cursor: pointer;
   text-align: center;
   top: 15px;
-  margin-left: 20px;
+  margin-left: 40px;
   border-radius: 25px;
   width: 50px;
   height: 50px;

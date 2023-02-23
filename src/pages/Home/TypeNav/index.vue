@@ -5,12 +5,7 @@
     enter-active-class="animate__backInUp"
     leave-active-class="animate__backOutUp"
   >
-    <div
-      class="box"
-      v-show="show"
-      @mouseenter="keepShow"
-      @mouseleave="shutDown"
-    >
+    <div class="box" v-show="show">
       <div class="left">
         <div v-for="i in n" :key="i">{{ i }}</div>
       </div>
@@ -60,6 +55,7 @@ a {
   width: 900px;
   height: 500px;
   background-color: white;
+  border-radius: 10px;
   position: absolute;
   z-index: 2;
   top: 75px;

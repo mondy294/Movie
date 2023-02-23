@@ -144,7 +144,9 @@
           :style="{ backgroundImage: 'url(' + item.author_img + ')' }"
         ></div>
         <a>{{ item.message_author }}</a>
-        <span class="publish_time">4分钟前</span>
+        <span class="publish_time"
+          >{{ item.publish_time.split(".")[0].replace("T", " ") }}发布</span
+        >
         <div class="content_dongtai">
           <span
             class="content_area"
@@ -175,15 +177,56 @@
       </div>
     </div>
     <div class="right">
-      <div class="banner"></div>
-      <div class="panel"></div>
+      <div class="banner">
+        <div class="banner-text">公告栏</div>
+        <img
+          src="https://i0.hdslb.com/bfs/vc/9c699f2acbcad00197e92c401b835d2c6aba8a55.png@259w_110h_1c.webp"
+          alt=""
+        />
+      </div>
+      <div class="ad" v-show="showAd">
+        <span class="ad-img"></span>
+        <Swiper :imglist="imgList"></Swiper>
+        <span class="clean" @click="showAd = false"></span>
+      </div>
+      <div class="panel">
+        <span>话题</span>
+        <div class="topic">
+          <div class="topic-title">梅西对着家人画面傻笑半分钟</div>
+          <span>113.7万浏览·389讨论</span>
+        </div>
+        <div class="topic">
+          <div class="topic-title">梅西对着家人画面傻笑半分钟</div>
+          <span>113.7万浏览·389讨论</span>
+        </div>
+        <div class="topic">
+          <div class="topic-title">梅西对着家人画面傻笑半分钟</div>
+          <span>113.7万浏览·389讨论</span>
+        </div>
+        <div class="topic">
+          <div class="topic-title">梅西对着家人画面傻笑半分钟</div>
+          <span>113.7万浏览·389讨论</span>
+        </div>
+        <div class="topic">
+          <div class="topic-title">梅西对着家人画面傻笑半分钟</div>
+          <span>113.7万浏览·389讨论</span>
+        </div>
+        <div class="topic">
+          <div class="topic-title">梅西对着家人画面傻笑半分钟</div>
+          <span>113.7万浏览·389讨论</span>
+        </div>
+        <div class="topic">
+          <div class="topic-title">梅西对着家人画面傻笑半分钟</div>
+          <span>113.7万浏览·389讨论</span>
+        </div>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
 import qs from "qs";
-import axios from "axios";
+import Swiper from "../../Home/swiper";
 export default {
   name: "Message",
   data() {
@@ -197,9 +240,16 @@ export default {
       id: localStorage.getItem("id"),
       userinfo: {},
       message: [],
+      showAd: true,
+      imgList: [
+        "https://i0.hdslb.com/bfs/sycp/creative_img/202212/07665581d02887a7509ce5e19ac45ac0.png",
+        "https://i0.hdslb.com/bfs/sycp/creative_img/202212/985be9e30e26cfb0d8ce04bc65f4e436.jpg",
+      ],
     };
   },
-  computed: {},
+  components: {
+    Swiper,
+  },
   mounted() {
     this.getData();
     this.showMessage();
@@ -245,7 +295,9 @@ export default {
     },
 
     async publish() {
+      this.choose = !this.choose;
       let now = this.getNowDate();
+      console.log(now);
       let formdata = new FormData();
       if (this.pic_list.length) {
         this.pic_list.forEach((item) => {
@@ -304,8 +356,6 @@ export default {
       }
     },
     add_pic() {
-      // 这里的formdata应该是个全局变量
-
       let _that = this;
       let reader = new FileReader();
       if (this.$refs.pic_data.files[0] != {}) {
@@ -344,13 +394,17 @@ export default {
   left: 50%;
   transform: translateX(-50%);
   width: 1283px;
-  background-color: skyblue;
+  /* background-color: skyblue; */
   border-radius: 5px;
+  padding-top: 10px;
+  padding-bottom: 20px;
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 60px;
 }
 .left {
-  position: fixed;
-  left: 10px;
-  top: 10px;
+  position: sticky;
+  top: 5px;
   width: 268px;
   height: 854px;
 }
@@ -440,9 +494,8 @@ export default {
 /* 中间结构 */
 .middle {
   position: relative;
-  left: 50%;
-  transform: translateX(-50%);
-  top: 10px;
+  /* left: 50%;
+  transform: translateX(-50%); */
   border-radius: 5px;
   width: 700px;
   padding-bottom: 40px;
@@ -738,26 +791,107 @@ export default {
 
 /* 右边结构 */
 .right {
-  position: fixed;
-  right: 10px;
-  top: 10px;
+  position: sticky;
+  top: 5px;
   height: 854px;
   width: 268px;
   height: 672px;
   border-radius: 5px;
 }
 .banner {
+  box-sizing: border-box;
   width: 100%;
   height: 155px;
+  padding: 5px 0px;
   background-color: white;
   border-radius: 5px;
 }
-.panel {
+.banner-text {
   width: 100%;
-  height: 509px;
+  height: 20px;
+  margin-left: 10px;
+}
+.banner > img {
+  position: absolute;
+  border-radius: 5px;
+  width: 240px;
+  left: 50%;
   margin-top: 10px;
+  transform: translateX(-50%);
+}
+.ad {
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  height: 156px;
+  background-color: #fff;
+  margin-top: 10px;
+  border-radius: 5px;
+}
+.ad-img {
+  position: absolute;
+  width: 38px;
+  height: 22px;
+  left: 4px;
+  bottom: 4px;
+  background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEwAAAAsCAMAAAD4va5DAAAAolBMVEX///8AAAAAAAAAAAAAAAACAgIAAAAAAAAGBgb5+fns7OwAAACBgYHq6ur9/f17e3tgYGD09PSoqKiLi4sAAAANDQ3V1dW6urqPj48DAwMAAAD////u7u7j4+MbGxv////b29vBwcH19fXt7e3GxsaLi4ukpKRTU1P4+Pjl5eXh4eHX19fLy8vb29v4+PisrKwvLy86Ojr7+/vy8vK4uLhVVVX0WqNFAAAANnRSTlOZAgULFR0IACCBYxIvW4sxJmk0HxoXU0grJQ6TZl0cj1RFcmtENTUmfGFYTUlGcT4rI4dyMhsJ24tXAAABiElEQVRIx+3XyW6DMBCA4WnAzrCUJUDYCpQAIWuTdHn/V6sNqZqFAwSfqv4HJHP4ZECIAabT6ZOQGARnazKqhuBYI1EqjYjSxpsCt6gUaZr8cJoWSZRr0FiObcCIDNvhWoNJTgYjyxypxWhkw+jsiHJsQjVjPGZodMIxSQMBaVKLySIw+R/jxX5lXK2LFYDqK4/tLCeby+UadwA7XAzECj/Py7KcuXVZ5rnv+zHfmEXYzvbuUOwVyU+IGIYhxxLipp4ne15K2Dm/P0Y2ylV8tyQNWF+yEwS6ac4HYC9w0wLT5vr28tvgy7zD3msbhGHqRm369LZqW/Y4FiJxWR7LdQnBMFR6Ylss4KYkSZ4vYkujJ7bDhbjX6YAruGu9nLGW7THvj1Vo3GNzcrIsq64tFtH7YyeELuz3qaT9MQUrcZiKW3HYISw6MSvQddM0dT0gvbH4eIy7MLS41Who9r9nc+hoXX3Auazy/84HZSAmdjwQOriIHKmEDnuCx1ChA7LI0V3sT4XQ351vRIIkxg4KQCAAAAAASUVORK5CYII=)
+    50% no-repeat;
+  z-index: 9999;
+  border-radius: 2px;
+  background-size: cover;
+}
+.clean {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  height: 14px;
+  width: 14px;
+  background-color: #fff;
+  border-radius: 1px;
+  z-index: 1;
+  cursor: pointer;
+  background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACoAAAAqCAYAAADFw8lbAAAAAXNSR0IArs4c6QAAAERlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAA6ABAAMAAAABAAEAAKACAAQAAAABAAAAKqADAAQAAAABAAAAKgAAAADUGqULAAABwUlEQVRYCe3Z3W2DMBQFYBdVmQHEA0PwxGRdoV0jy/DEEDwQmALqg3QbZIF/DxWRYskyCvj64zoYQtSyLDddv3V96Hq1AhNstw9sKKW+dL1y+QH0oYXFlZXaNgK6XBy58rJXQML4hrJnypnRcRzVMAzscf/iTdOkUF3l03YAArRtux5SVZWq69p2ePC+rutU3/drv6ZpVFEcLz7OjMroCIjArLJFIuY8z9bQVmie5wqZlMLCmkiMUZalDLPbWqHogelmYveQPl8pJ5SJjUXC4AVlYFOQQdAUbCoyGBqDZSCjoCFYFjIa6oNlIjGe9c6EA2xFlhW5u0iLPtttxl2N8jxqZm97cgwk4nkvT9vBzW3zpiD7WUjEo0AFdmZLgR5NPevZgJJRE4npRpXCwiZd9XtIWQkAlStf2u0+ORHfNnrqXUjzAkvNbBTUhZQsMbHBUF8kGxsEDUUysd7QWCQL6wVNRTKwTigLmYq1QvHiQdZADMS6d++tBq6XEFZolj13s5BHmZXPj1rnY56cKX7jn1Ewa0iI7S0JxnVCz8DFxHzObUzvf+zzhrKTjYyO7KAnxBsBvZ8QmB3yrvSfIi/xh9gvf7qDYRSmCwcAAAAASUVORK5CYII=);
+  background-size: 12px 12px;
+  background-repeat: no-repeat;
+  background-position: 50%;
+}
+.panel {
+  box-sizing: border-box;
+  width: 100%;
+  margin-top: 10px;
+  padding: 20px 10px;
   background-color: white;
   border-radius: 5px;
+}
+.panel > span {
+  font-size: 16px;
+}
+.topic {
+  margin-top: 12px;
+  cursor: pointer;
+  margin-bottom: 12px;
+  margin-left: 25px;
+  padding-right: 12px;
+  position: relative;
+}
+.topic-title {
+  font-size: 14px;
+}
+.topic > span {
+  font-size: 12px;
+  color: #9499a0;
+}
+.topic::before {
+  background-image: url(data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTgiIGhlaWdodD0iMTciIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHBhdGggZmlsbC1ydWxlPSJldmVub2RkIiBjbGlwLXJ1bGU9ImV2ZW5vZGQiIGQ9Ik0xMy4yODggMS41OTNhLjYzMy42MzMgMCAwMC0uMDEtLjI3N2MtLjExOC0uNDY0LS41ODgtLjc5LTEuMTE3LS43NWEuNzkuNzkgMCAwMC0uMjkuMDc2LjcxNy43MTcgMCAwMC0uMTk2LjEzOWMtLjAyNi4wMjUtLjA0OC4wNTMtLjA3LjA4TDExLjYuODY2bC0uMDcxLjA4Ny0uMTQxLjE3NmMtLjE4Ny4yMzUtLjM3LjQ3My0uNTQ1LjcxNWExNy43MzQgMTcuNzM0IDAgMDAtLjc0NSAxLjExMmwtLjM4Ny0uMDA0YTgxLjgzNyA4MS44MzcgMCAwMC0yLjEyNS4wMSAxMy45MjUgMTMuOTI1IDAgMDAtLjI0LS4zNzkgMjAuNzc1IDIwLjc3NSAwIDAwLTEuMDU1LTEuNDU0bC0uMTQtLjE3Nkw2LjA4Ljg2NiA2LjA3OC44NjNhLjcxNC43MTQgMCAwMC0uMjY4LS4yMi43ODkuNzg5IDAgMDAtLjI5LS4wNzdjLS41MTMtLjA0LS45OTUuMjczLTEuMTE2Ljc1YS42MzMuNjMzIDAgMDAuMTMzLjU3OGwuMDA0LjAwNi4wNjguMDg5LjEzOC4xNzhhMjIuMDcgMjIuMDcgMCAwMC43MTYuODY4IDYzLjgxIDYzLjgxIDAgMDAtMS40OTQuMDkzbC0uNDEuMDMyLS4yMDQuMDE3LS4xMTYuMDEzYTEuOTE4IDEuOTE4IDAgMDAtLjA4LjAxMWwtLjAzNS4wMDZBMi44NDUgMi44NDUgMCAwMC43NjcgNS43NTJhNDUuNDY0IDQ1LjQ2NCAwIDAwLS4xOTUgMy4yODYgNDAuMiA0MC4yIDAgMDAuMDY1IDMuMjk0Yy4wMTYuMjc0LjAzNS41NDcuMDU1LjgybC4wMzQuNDExLjAxNy4yMDUuMDAzLjAyNi4wMDMuMDI5LjAwNi4wNThjLjAwMy4wMzIuMDA4LjA2NC4wMTMuMDk1YTIuODY5IDIuODY5IDAgMDAxLjY0OCAyLjE3M2MuMjg3LjEzLjU5NS4yMTQuOTA3LjI0M2wuMDQxLjAwNC4wMTMuMDAxLjA1MS4wMDUuMTAzLjAwOC4yMDUuMDE3LjQxLjAzMmE2OC43NjUgNjguNzY1IDAgMDA5LjAzLjA0OWMuMjcyLS4wMTguNTQ2LS4wMzYuODE5LS4wNTdsLjQxLS4wMzQuMjA1LS4wMTguMTE3LS4wMTIuMDgyLS4wMTMuMDM0LS4wMDVhMi44NjkgMi44NjkgMCAwMDIuMzIyLTIuMjI5bC4wMTMtLjA1OC4wMS0uMDU4YTIuOTM2IDIuOTM2IDAgMDAuMDMtLjIyOGMuMTEyLTEuMDkxLjE4Ny0yLjE4OC4yMTEtMy4yODhhMzQuODQ2IDM0Ljg0NiAwIDAwLS4wOS0zLjNjLS4wMTktLjI3My0uMDQtLjU0Ny0uMDY2LS44MmwtLjA0LS40MS0uMDItLjIwNS0uMDA2LS4wNTEtLjAwNy0uMDU3YTMuMDg0IDMuMDg0IDAgMDEtLjAwNC0uMDNjLS4wMDQtLjAyOS0uMDA3LS4wNTctLjAxMy0uMDg1YTIuODc0IDIuODc0IDAgMDAtMS42NDQtMi4xNCAyLjgyNiAyLjgyNiAwIDAwLS45NDQtLjI0NGgtLjAxMWwtLjA1Mi0uMDA1LS4xMDItLjAwOS0uMjA1LS4wMTYtLjQxLS4wM2E1OC4wODYgNTguMDg2IDAgMDAtMS41OC0uMDlsLjEzLS4xNWMuMTk1LS4yMy4zODQtLjQ2My41Ny0uN2wuMTM3LS4xNzcuMDY4LS4wOS4wMDYtLjAwN2MuMDItLjAyNy4wNDItLjA1NC4wNi0uMDg0YS42MzEuNjMxIDAgMDAuMDgyLS4yMTV6bS0yLjYyNSAzLjY0OGMuMDY3LS40MDQuNDMzLS42NzUuODE5LS42MDVoLjAwNGMuMzg4LjA3NC42NDcuNDYyLjU4Ljg2OUwxMS44IDcuMTEzaDEuNDNjLjQyNiAwIC43Ny4zNjEuNzcuODA2IDAgLjQ0Ni0uMzQ0LjgwNy0uNzcuODA3aC0xLjY5N2wtLjMyIDEuOTM1aDEuNTU2Yy40MjUgMCAuNzcuMzYyLjc3LjgwNyAwIC40NDUtLjM0NS44MDYtLjc3LjgwNmgtMS44MjJsLS4yODcgMS43MzVjLS4wNjcuNDA0LS40MzMuNjc1LS44MTkuNjA1aC0uMDA0Yy0uMzg4LS4wNzQtLjY0Ny0uNDYyLS41OC0uODY5bC4yNDQtMS40N0g3LjYyNGwtLjI4NyAxLjczNGMtLjA2Ny40MDQtLjQzMy42NzUtLjgxOS42MDVoLS4wMDRjLS4zODgtLjA3NC0uNjQ3LS40NjItLjU4LS44NjlsLjI0My0xLjQ3SDQuNzdjLS40MjUgMC0uNzY5LS4zNjItLjc2OS0uODA3IDAtLjQ0NS4zNDQtLjgwNy43Ny0uODA3aDEuNjc0bC4zMi0xLjkzNUg1LjIzYy0uNDI1IDAtLjc3LS4zNjEtLjc3LS44MDcgMC0uNDQ1LjM0NS0uODA2Ljc3LS44MDZoMS44bC4zMDktMS44NzJjLjA2Ny0uNDA0LjQzMy0uNjc1LjgxOS0uNjA1aC4wMDRjLjM4OC4wNzQuNjQ3LjQ2Mi41OC44NjlsLS4yNjYgMS42MDhoMS44NzdsLjMwOS0xLjg3MnptLS44OTYgNS40MmwuMzItMS45MzVIOC4yMWwtLjMyIDEuOTM1aDEuODc3eiIgZmlsbD0iIzAwOEFDNSIvPjwvc3ZnPg==);
+  background-position: 50%;
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  content: "";
+  height: 16px;
+  left: -24px;
+  position: absolute;
+  top: 2px;
+  width: 16px;
 }
 .my-info-box {
   width: 100%;

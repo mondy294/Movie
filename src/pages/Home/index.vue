@@ -3,7 +3,7 @@
     <Topic></Topic>
     <TypeNav></TypeNav>
     <Login></Login>
-    <Swiper></Swiper>
+    <Swiper :imglist="img"></Swiper>
     <Mainarea></Mainarea>
   </div>
 </template>
@@ -17,6 +17,11 @@ import Login from "../Home/Login";
 
 export default {
   name: "Home",
+  data() {
+    return {
+      img: ["./images/科幻.jpg", "./images/动作.jpg"],
+    };
+  },
   components: {
     Topic,
     Swiper,

@@ -98,12 +98,13 @@ export default {
   margin-right: 250px;
 }
 .topic > a:nth-child(n + 2) {
+  font-size: 24px;
   width: 100px;
   height: 75px;
   text-align: center;
 }
 a:hover {
-  background-color: skyblue;
+  transform: scale(1.2);
 }
 div,
 a {

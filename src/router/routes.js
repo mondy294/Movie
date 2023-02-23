@@ -4,6 +4,7 @@ import Register from '@/pages/register'
 import UpLoad from '@/pages/center/upload.vue'
 import Category from '@/pages/category'
 import Message from '@/pages/center/message/message.vue'
+import Bigupload from '@/pages/bigupload'
 
 
 export default [
@@ -57,6 +58,11 @@ export default [
         path: '/category',
         component: Category,
         name: 'category'
+    },
+    {
+        path: '/bigupload',
+        component: Bigupload,
+        name: 'bigupload'
     }
 ]
 

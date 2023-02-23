@@ -85,8 +85,9 @@ export default {
   transform: translateX(-50%);
   width: 1283px;
   height: 700px;
-  border: 1px solid rgba(0, 0, 0, 0.2);
+  /* border: 1px solid rgba(0, 0, 0, 0.2); */
   border-radius: 5px;
+  padding-bottom: 200px;
 }
 input {
   display: none;
